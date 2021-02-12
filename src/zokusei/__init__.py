@@ -1,7 +1,8 @@
+from typing import Any
+from typing import NamedTuple
+from typing import Optional
 
-from typing import NamedTuple,  Optional, Any
-
-_INTENAL_STORE = '_zokusei_attributes'
+_INTENAL_STORE = "_zokusei_attributes"
 
 
 class DataClass:
@@ -11,11 +12,10 @@ class DataClass:
         if _INTENAL_STORE not in cls.__dict__:
             setattr(cls, _INTENAL_STORE, _pluck_attributes(cls))
         if "__init__" not in cls.__dict__:
-           cls.__init__ = _make_init(cls)
+            cls.__init__ = _make_init(cls)
         if "__repr__" not in cls.__dict__:
             cls.__repr__ = default_repr
         super()
-
 
 
 def _make_init(current_klass):
@@ -29,27 +29,29 @@ def _make_init(current_klass):
             try:
                 val = kw.pop(name)
             except KeyError:
-                val =  attribute.default
+                val = attribute.default
             setattr(self, name, val)
         super(current_klass, self).__init__(**kw)
+
     return __init__
-
-
 
 
 class SimpleAttribute:
     pass
 
+
 class DefaultSimpleAttribute(NamedTuple):
     default: Optional[Any] = None
 
+
 def attributes(cls):
     return [
-        Attribute(name=name, default=attribute.default) if isinstance(attribute, (SimpleAttribute,  DefaultSimpleAttribute)) else attribute
-     
-     for mro_element in reversed(cls.__mro__)
-     for name, attribute in getattr(mro_element, _INTENAL_STORE, {}).items()
-     ]
+        Attribute(name=name, default=attribute.default)
+        if isinstance(attribute, (SimpleAttribute, DefaultSimpleAttribute))
+        else attribute
+        for mro_element in reversed(cls.__mro__)
+        for name, attribute in getattr(mro_element, _INTENAL_STORE, {}).items()
+    ]
 
 
 def default_repr(self):
@@ -68,16 +70,14 @@ def _pluck_attributes(cls):
     return plucked
 
 
-
 class Attribute(DataClass):
     _zokusei_attributes = {
         "name": DefaultSimpleAttribute(None),
-        "default": DefaultSimpleAttribute(None)
+        "default": DefaultSimpleAttribute(None),
     }
 
     def __set_name__(self, owner, name):
         self.name = name
-
 
 
 def attribute():
@@ -85,8 +85,4 @@ def attribute():
 
 
 def as_dict(obj):
-    return {
-        attr.name: getattr(obj, attr.name)
-        for attr in attributes(type(obj))
-
-    }
+    return {attr.name: getattr(obj, attr.name) for attr in attributes(type(obj))}

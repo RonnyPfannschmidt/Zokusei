@@ -1,3 +1,4 @@
+import setuptools_scm  # NOQA
 from setuptools import setup
-import setuptools_scm
+
 setup()
