@@ -8,13 +8,15 @@ _INTENAL_STORE = "_zokusei_attributes"
 class DataClass:
     __slots__ = ()
 
-    def __init_subclass__(cls, *addons, **args):
+    def __init_subclass__(cls, *addons, eq=None,  **args):
         if _INTENAL_STORE not in cls.__dict__:
             setattr(cls, _INTENAL_STORE, _pluck_attributes(cls))
         if "__init__" not in cls.__dict__:
             cls.__init__ = _make_init(cls)
         if "__repr__" not in cls.__dict__:
-            cls.__repr__ = default_repr
+            cls.__repr__ = _default_repr
+        if eq and "__eq__" not in cls.__dict__:
+            cls.__eq__ = _make_eq(cls)
         super()
 
 
@@ -36,6 +38,21 @@ def _make_init(current_klass):
     return __init__
 
 
+def _make_eq(current_klass):
+    attributes = getattr(current_klass, _INTENAL_STORE)
+
+    # todo: positional args
+    def __eq__(self, other):
+        print((name, getattr(self, name), getattr(other, name)) for name in attributes)
+        # todo: cooperation
+        return all(getattr(self, name) == getattr(other, name) for name in attributes) 
+        # and super(current_klass, self).__eq__(other)
+
+    return __eq__
+
+def _default_ne(self, other):
+    return not self == other
+
 class SimpleAttribute:
     pass
 
@@ -54,7 +71,7 @@ def attributes(cls):
     ]
 
 
-def default_repr(self):
+def _default_repr(self):
     params = ", ".join(
         f"{attribute.name}={getattr(self, attribute.name)!r}"
         for attribute in attributes(type(self))
