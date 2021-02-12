@@ -9,7 +9,7 @@ and it tries to avoid feature cost.
 
 ```pycon
 
->>> from zokusei import DataClass, attribute
+>>> from zokusei import DataClass, attribute, as_dict
 
 >>> class SomeClass(DataClass):
 ...     a_number: int = attribute(default=42)
@@ -30,20 +30,10 @@ True
 >>> sc != SomeClass(2, [3, 2, 1])
 True
 
->>> attr.asdict(sc)
+>>> as_dict(sc)
 {'a_number': 1, 'list_of_numbers': [1, 2, 3]}
 
 >>> SomeClass()
 SomeClass(a_number=42, list_of_numbers=[])
-
->>> C = attr.make_class("C", ["a", "b"])
->>> C("foo", "bar")
-C(a='foo', b='bar')
-from zokusei import DataClass, attribute
-
-class User(zokusei.DataClass):
-    id: int = attribute(repr=False)
-    name: str = attribute()
-    age: int = attribute(repr=False, eq=True)
 
 ```

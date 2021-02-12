@@ -82,3 +82,11 @@ class Attribute(DataClass):
 
 def attribute():
     return Attribute()
+
+
+def as_dict(obj):
+    return {
+        attr.name: getattr(obj, attr.name)
+        for attr in attributes(type(obj))
+
+    }
