@@ -1,9 +1,9 @@
-# Zokusei - Fast and simple python declarative classes
+# Zokusei - Fast and simple Python declarative classes
 
 
-Zokusei is japanese for attribute.
-its apis is modeled after attrs,
-but its using minimal metaprogrammign instead of code generation
+Zokusei is Japanese for attribute.
+Its APIs are modeled after attrs,
+but it's using minimal metaprogramming instead of code generation
 and it tries to avoid feature cost.
 
 
