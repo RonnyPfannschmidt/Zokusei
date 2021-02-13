@@ -10,9 +10,15 @@ class Example(DataClass):
     name: str = attribute()
     age: int = attribute()
 
+
 class Point(DataClass, eq=True):
     x: int = attribute()
     y: int = attribute()
+
+
+class Priorized(DataClass, order=True):
+    priority: int = attribute(order=True)
+    name: str = attribute(order=False)
 
 
 @pytest.fixture
@@ -40,3 +46,31 @@ def test_eq():
     c = Point(x=1, y=3)
 
     assert a != c
+
+
+def test_order():
+    first = Priorized(priority=1, name="win")
+    tied = Priorized(priority=1, name="win2")
+    different = Priorized(priority=2, name="nay")
+
+    assert not first < tied
+    assert not tied < first
+    assert first > tied
+    assert tied > first
+    assert not first == tied  # sorting the same but is not the same
+
+    assert different > first
+    assert first < different
+
+    assert (
+        sorted(
+            [
+                different,
+                first,
+                tied,
+            ]
+        )
+        == [first, tied, different]
+    )
+
+    assert sorted([tied, first]) == [tied, first]
