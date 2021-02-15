@@ -6,3 +6,7 @@ requires = [
 ]
 
 [tool.setuptools_scm]
+
+
+[tool.pytest.ini_options]
+addopts = "--benchmark-group-by=func --benchmark-columns=mean,median --benchmark-name=short"
