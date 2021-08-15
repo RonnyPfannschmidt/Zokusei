@@ -10,3 +10,6 @@ requires = [
 
 [tool.pytest.ini_options]
 addopts = "--benchmark-group-by=func --benchmark-columns=mean,median --benchmark-name=short"
+markers = [
+    "class_config(**config)",
+]

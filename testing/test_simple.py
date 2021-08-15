@@ -1,24 +1,24 @@
 import pytest
 
 from zokusei import as_dict
-from zokusei import attribute
 from zokusei import attributes
 from zokusei import DataClass
+from zokusei import field
 
 
 class Example(DataClass):
-    name: str = attribute()
-    age: int = attribute()
+    name: str = field()
+    age: int = field()
 
 
 class Point(DataClass, eq=True):
-    x: int = attribute()
-    y: int = attribute()
+    x: int = field()
+    y: int = field()
 
 
 class Priorized(DataClass, order=True):
-    priority: int = attribute(order=True)
-    name: str = attribute(order=False)
+    priority: int = field(order=True)
+    name: str = field(order=False)
 
 
 @pytest.fixture
