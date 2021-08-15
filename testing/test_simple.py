@@ -11,12 +11,12 @@ class Example(DataClass):
     age: int = field()
 
 
-class Point(DataClass, eq=True):
+class Point(DataClass, eq=True):  # type: ignore
     x: int = field()
     y: int = field()
 
 
-class Priorized(DataClass, order=True):
+class Priorized(DataClass, order=True):  # type: ignore
     priority: int = field(order=True)
     name: str = field(order=False)
 
