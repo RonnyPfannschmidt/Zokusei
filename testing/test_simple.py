@@ -62,15 +62,12 @@ def test_order():
     assert different > first
     assert first < different
 
-    assert (
-        sorted(
-            [
-                different,
-                first,
-                tied,
-            ]
-        )
-        == [first, tied, different]
-    )
+    assert sorted(
+        [
+            different,
+            first,
+            tied,
+        ]
+    ) == [first, tied, different]
 
     assert sorted([tied, first]) == [tied, first]
