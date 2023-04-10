@@ -10,12 +10,10 @@ class DataClass:
 
     @classmethod
     def __init_subclass__(cls, *, eq: bool = False, order: bool = False):
-
         _add_methods(cls, eq, order)
 
 
 class Attribute:
-
     # name: Optional[str]
     # default: Optional[object]
     # order: Optional[bool]

@@ -129,7 +129,6 @@ def test_make_instance(benchmark, klass, args):
 
 
 def test_repr(benchmark, klass, args):
-
     inst = klass(**dict.fromkeys(args, 1))
 
     benchmark(repr, inst)
