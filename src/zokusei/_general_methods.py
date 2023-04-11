@@ -6,7 +6,6 @@ _INTERNAL_STORE = "_zokusei_attributes"
 
 
 def _make_init(current_klass, attributes):
-
     # todo: positional args
     def __init__(self, **kw):
         # todo: cooperation
@@ -51,7 +50,6 @@ def _default_repr(self) -> str:
 
 
 def _make_lt(current_klass, attributes):
-
     getter = _attrgetter(*(name for name, attr in attributes.items() if attr.order))
 
     def __lt__(self, other, _getter=getter):
