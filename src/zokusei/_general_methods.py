@@ -1,7 +1,6 @@
 from functools import total_ordering as _total_ordering
 from operator import attrgetter as _attrgetter
 
-
 _INTERNAL_STORE = "_zokusei_attributes"
 
 
